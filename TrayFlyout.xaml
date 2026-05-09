@@ -113,12 +113,13 @@
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerBrush}"/>
                             </Trigger>
-                            <Trigger Property="IsChecked" Value="True">
+                            <MultiTrigger>
                                 <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True"/>
                                     <Condition Property="IsMouseOver" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
-                            </Trigger>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
