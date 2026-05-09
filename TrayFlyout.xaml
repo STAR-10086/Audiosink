@@ -1,0 +1,255 @@
+<Window x:Class="Audiosink.TrayFlyout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Audiosink"
+        Height="320" Width="360"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        Deactivated="Window_Deactivated"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+
+    <Window.Resources>
+        <!-- Mica 材质背景画刷 -->
+        <SolidColorBrush x:Key="MicaBackgroundBrush" Color="#F3F3F3"/>
+        <SolidColorBrush x:Key="MicaBorderBrush" Color="#E0E0E0"/>
+
+        <!-- 文字画刷 -->
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#616161"/>
+        <SolidColorBrush x:Key="TextTertiaryBrush" Color="#9E9E9E"/>
+
+        <!-- 状态指示灯画刷 -->
+        <SolidColorBrush x:Key="StatusConnectedBrush" Color="#0F7B0F"/>
+        <SolidColorBrush x:Key="StatusDisconnectedBrush" Color="#C42B1C"/>
+        <SolidColorBrush x:Key="StatusConnectingBrush" Color="#F7630C"/>
+
+        <!-- 按钮画刷 -->
+        <SolidColorBrush x:Key="ButtonPrimaryBrush" Color="#005FB8"/>
+        <SolidColorBrush x:Key="ButtonPrimaryHoverBrush" Color="#004E99"/>
+        <SolidColorBrush x:Key="ButtonPrimaryPressedBrush" Color="#003E7A"/>
+        <SolidColorBrush x:Key="ButtonDangerBrush" Color="#C42B1C"/>
+        <SolidColorBrush x:Key="ButtonDangerHoverBrush" Color="#A61B10"/>
+        <SolidColorBrush x:Key="ButtonDangerPressedBrush" Color="#8B1510"/>
+
+        <!-- 图标画刷 -->
+        <SolidColorBrush x:Key="IconPrimaryBrush" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="IconSecondaryBrush" Color="#616161"/>
+
+        <!-- 圆角边框 -->
+        <CornerRadius x:Key="WindowCornerRadius">12</CornerRadius>
+        <CornerRadius x:Key="ButtonCornerRadius">8</CornerRadius>
+        <CornerRadius x:Key="IndicatorCornerRadius">6</CornerRadius>
+
+        <!-- 阴影效果 -->
+        <DropShadowEffect x:Key="WindowShadow"
+                          BlurRadius="16"
+                          ShadowDepth="2"
+                          Opacity="0.15"
+                          Color="#000000"/>
+
+        <!-- 控件模板 -->
+        <Style x:Key="SettingsButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0A000000"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0F000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="{StaticResource ButtonPrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="24,16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource ButtonCornerRadius}"
+                                Padding="{TemplateBinding Padding}"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- 主容器 -->
+    <Border x:Name="MainBorder"
+            Background="{StaticResource MicaBackgroundBrush}"
+            BorderBrush="{StaticResource MicaBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource WindowCornerRadius}"
+            Effect="{StaticResource WindowShadow}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 顶部：应用名称和设置图标 -->
+            <Grid Grid.Row="0" Margin="20,16,16,8">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- 应用图标 -->
+                    <TextBlock Text="&#xE767;"
+                               FontFamily="Segoe Fluent Icons"
+                               FontSize="18"
+                               Foreground="{StaticResource IconPrimaryBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"/>
+                    <!-- 应用名称 -->
+                    <TextBlock Text="Audiosink"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 设置按钮 -->
+                <Button x:Name="SettingsButton"
+                        Style="{StaticResource SettingsButtonStyle}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Click="SettingsButton_Click"
+                        ToolTip="设置">
+                    <TextBlock Text="&#xE713;"
+                               FontFamily="Segoe Fluent Icons"
+                               FontSize="16"
+                               Foreground="{StaticResource IconSecondaryBrush}"/>
+                </Button>
+            </Grid>
+
+            <!-- 中间：设备信息和状态 -->
+            <Grid Grid.Row="1" Margin="20,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- 设备图标 -->
+                <TextBlock Grid.Row="0"
+                           x:Name="DeviceIcon"
+                           Text="&#xE702;"
+                           FontFamily="Segoe Fluent Icons"
+                           FontSize="48"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,12"
+                           FontWeight="Normal"/>
+
+                <!-- 设备名称 -->
+                <TextBlock Grid.Row="1"
+                           x:Name="DeviceNameText"
+                           Text="未连接设备"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           HorizontalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           Margin="0,0,0,8"/>
+
+                <!-- 连接状态指示灯 -->
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Border x:Name="StatusIndicator"
+                            Width="10" Height="10"
+                            CornerRadius="5"
+                            Background="{StaticResource StatusDisconnectedBrush}"
+                            Margin="0,0,8,0"/>
+                    <TextBlock x:Name="StatusText"
+                               Text="未连接"
+                               FontSize="13"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 音频信息（可选） -->
+                <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Margin="0,16,0,0"
+                            Visibility="Collapsed">
+                    <TextBlock Text="&#xE767;"
+                               FontFamily="Segoe Fluent Icons"
+                               FontSize="14"
+                               Foreground="{StaticResource TextTertiaryBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,6,0"/>
+                    <TextBlock x:Name="AudioInfoText"
+                               Text="音频输出: 扬声器"
+                               FontSize="12"
+                               Foreground="{StaticResource TextTertiaryBrush}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- 底部：断开/连接按钮 -->
+            <Grid Grid.Row="2" Margin="20,8,20,20">
+                <ToggleButton x:Name="ConnectionToggleButton"
+                              Style="{StaticResource ToggleButtonStyle}"
+                              Content="连接设备"
+                              IsChecked="False"
+                              Click="ConnectionToggleButton_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

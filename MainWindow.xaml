@@ -1,0 +1,12 @@
+<Window x:Class="Audiosink.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Audiosink"
+        Height="0" Width="0"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        Visibility="Hidden"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <!-- 主窗口隐藏，仅作为应用程序容器 -->
+</Window>
