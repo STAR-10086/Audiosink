@@ -1,0 +1,37 @@
+name: Build Audiosink
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 9.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Publish Native AOT
+      run: dotnet publish -c Release -r win-x64 --self-contained
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: audiosink-win-x64
+        path: |
+          bin/Release/net9.0-windows10.0.19041.0/win-x64/publish/
+        retention-days: 30
