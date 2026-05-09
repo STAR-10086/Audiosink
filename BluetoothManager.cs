@@ -398,11 +398,12 @@ public static class BluetoothNativeMethods
     public static bool EnableA2dpSinkService(IntPtr hRadio, ref BLUETOOTH_DEVICE_INFO deviceInfo)
     {
         const uint BLUETOOTH_SERVICE_ENABLE = 0x01;
+        var serviceClass = A2DP_SINK_SERVICE_CLASS;
 
         uint result = BluetoothSetServiceState(
             hRadio,
             ref deviceInfo,
-            ref A2DP_SINK_SERVICE_CLASS,
+            ref serviceClass,
             BLUETOOTH_SERVICE_ENABLE);
 
         return result == 0; // ERROR_SUCCESS
@@ -414,11 +415,12 @@ public static class BluetoothNativeMethods
     public static bool DisableA2dpSinkService(IntPtr hRadio, ref BLUETOOTH_DEVICE_INFO deviceInfo)
     {
         const uint BLUETOOTH_SERVICE_DISABLE = 0x00;
+        var serviceClass = A2DP_SINK_SERVICE_CLASS;
 
         uint result = BluetoothSetServiceState(
             hRadio,
             ref deviceInfo,
-            ref A2DP_SINK_SERVICE_CLASS,
+            ref serviceClass,
             BLUETOOTH_SERVICE_DISABLE);
 
         return result == 0; // ERROR_SUCCESS

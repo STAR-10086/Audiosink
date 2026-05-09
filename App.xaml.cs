@@ -1,5 +1,6 @@
 using System.Runtime.Versioning;
 using System.Windows;
+using System.Windows.Controls;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
 
@@ -100,7 +101,7 @@ public partial class App : Application
         _trayIcon.ContextMenu = contextMenu;
 
         // 显示托盘图标
-        _trayIcon.Visible = true;
+        _trayIcon.Show();
     }
 
     /// <summary>

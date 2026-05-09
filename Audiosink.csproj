@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
 
     <!-- 发布配置 (禁用 AOT/Trimming 以兼容 WinRT API) -->
     <PublishTrimmed>false</PublishTrimmed>
@@ -18,11 +19,13 @@
     <AssemblyName>Audiosink</AssemblyName>
     <RootNamespace>Audiosink</RootNamespace>
     <ApplicationIcon />
+    <StartupObject>Audiosink.App</StartupObject>
   </PropertyGroup>
 
   <!-- 依赖包 -->
   <ItemGroup>
     <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.3" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

@@ -105,10 +105,7 @@ public partial class TrayFlyout : Window
         // 监听鼠标点击外部区域
         MouseDown += (s, e) =>
         {
-            if (e.ChainedHandlersNotHandled)
-            {
-                e.Handled = true;
-            }
+            e.Handled = true;
         };
     }
 
