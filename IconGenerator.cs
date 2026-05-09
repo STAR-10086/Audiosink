@@ -22,7 +22,7 @@ internal static class IconGenerator
         using var graphics = Graphics.FromImage(bitmap);
 
         // 设置高质量渲染
-        graphics.SmoothingMode = SmoothingMode.AntiAliasing;
+        graphics.SmoothingMode = SmoothingMode.HighQuality;
         graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
         graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 

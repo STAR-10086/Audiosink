@@ -101,7 +101,7 @@ public partial class App : Application
         _trayIcon.ContextMenu = contextMenu;
 
         // 显示托盘图标
-        _trayIcon.Show();
+        _trayIcon.Create();
     }
 
     /// <summary>
