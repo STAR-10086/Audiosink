@@ -14,13 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4.2.2
 
-    - name: Install Windows SDK UAP component
-      shell: powershell
-      run: |
-        # Install Windows SDK with UAP component for WinRT API projection
-        Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/p/?LinkId=2285516" -OutFile "sdksetup.exe"
-        Start-Process -FilePath ".\sdksetup.exe" -ArgumentList "/quiet", "/norestart", "/features", "OptionId.UWPManaged" -Wait
-
     - name: Setup .NET 9.0
       uses: actions/setup-dotnet@v4.3.1
       with:
