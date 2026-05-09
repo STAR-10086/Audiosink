@@ -7,7 +7,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableDefaultPageItems>false</EnableDefaultPageItems>
 
     <!-- 发布配置 (禁用 AOT/Trimming 以兼容 WinRT API) -->
     <PublishTrimmed>false</PublishTrimmed>
