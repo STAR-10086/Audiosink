@@ -25,13 +25,13 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: Publish Native AOT
-      run: dotnet publish -c Release -r win-x64 --self-contained
+    - name: Publish
+      run: dotnet publish -c Release
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: audiosink-win-x64
         path: |
-          bin/Release/net9.0-windows10.0.19041.0/win-x64/publish/
+          bin/Release/net9.0-windows10.0.19041.0/publish/
         retention-days: 30
