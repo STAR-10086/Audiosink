@@ -214,7 +214,7 @@ public sealed class BluetoothManager : IDisposable
 /// Win32 蓝牙 API P/Invoke 声明
 /// </summary>
 [SupportedOSPlatform("windows10.0.19041.0")]
-internal static class BluetoothNativeMethods
+public static class BluetoothNativeMethods
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct BLUETOOTH_DEVICE_SEARCH_PARAMS
