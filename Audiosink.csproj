@@ -14,6 +14,9 @@
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
+    <!-- WinRT 配置 -->
+    <CsWinRTIncludes>Windows.Devices.Bluetooth;Windows.Devices.Bluetooth.Audio</CsWinRTIncludes>
+
     <!-- 应用信息 -->
     <AssemblyName>Audiosink</AssemblyName>
     <RootNamespace>Audiosink</RootNamespace>
@@ -23,7 +26,7 @@
   <!-- 依赖包 -->
   <ItemGroup>
     <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.3" />
-    <PackageReference Include="Microsoft.Windows.SDK.NET.Ref" Version="10.0.19041.45" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
